@@ -10,6 +10,7 @@ import ProductDetailsPage from './pages/ProductDetailsPage'
 import './App.css'
 import React from "react"
 import { Route, Routes } from "react-router-dom"
+import AdminUserPage from "./pages/admin/AdminUserPage"
 
 
 function App() {
@@ -24,7 +25,12 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/auth" element={<AuthenticationPage />} />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
-        <Route path="/blog/:id" element={<BlogDetailsPage />} />
+        <Route path="/blog/:id" element={<BlogDetailsPage />}/>
+        <Route path="/admin/*">
+        <Route path="users" element={<AdminUserPage/>}/>
+        </Route>
+        
+    
       </Routes>
 
 </React.Fragment>

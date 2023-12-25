@@ -39,7 +39,6 @@ const Galery = ({ onClick }) => {
         img: productData[0].img.singleImage,
         imageIndex: 0
     });
-    console.log(productData[3]);
     const SliderSettings = {
         dots: false,
         infinite: true,

@@ -16,7 +16,6 @@ const Products = () => {
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems])
-  console.log(cartItems, 'cartItems');
 
   const SliderSettings = {
     dots: false,

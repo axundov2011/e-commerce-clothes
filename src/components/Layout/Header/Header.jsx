@@ -1,13 +1,32 @@
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Header.css"
+import { logout, selecthAuth } from "../../../redux/slices/Auth.slice";
 const Header = ({ setIsSearchShow }) => {
-    const {pathname} = useLocation();
-    console.log(pathname, 'location');
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const { pathname } = useLocation();
+    const dispatch = useDispatch();
+    const isAuth = useSelector(selecthAuth)
+    const navigate = useNavigate();
     const cartItems = useSelector((state) => state.cart.cart)
-    console.log(cartItems.length, 'headerCartItems');
 
-    
+    //logout
+    // const restLogOut = () =>{
+    //     if(window.confirm("Siz heqiqeten silmek istediyinizden eminsiniz ?") && !isLoggingOut){
+    //         setIsLoggingOut(true);
+    //         dispatch(logout());
+
+    //         setTimeout(() => {
+    //             localStorage.removeItem('token');
+    //             setIsLoggingOut(false);
+    //             navigate("/auth")
+    //         })
+    //     }
+    // }
+
+    const user = localStorage.getItem("userToken")
+
 
     return (
         <div>
@@ -185,21 +204,36 @@ const Header = ({ setIsSearchShow }) => {
                             </div>
                             <div className="header-right">
                                 <div className="header-right-links">
-                                    <Link to="/auth" className="header-account">
+                                    {isAuth && isAuth ?(
+                                        <Link to="/update" className="header-account">
                                         <i className="bi bi-person"></i>
                                     </Link>
+                                    ) : <Link to="/auth" className="header-account">
+                                    <i className="bi bi-person"></i>
+                                </Link>}
                                     <button className="search-button" onClick={() => setIsSearchShow(true)}>
                                         <i className="bi bi-search"></i>
                                     </button>
-                                    <a href="#">
+                                    {/* <a href="#">
                                         <i className="bi bi-heart"></i>
-                                    </a>
+                                    </a> */}
                                     <div className="header-cart">
                                         <Link to="/cart" className="header-cart-link">
                                             <i className="bi bi-bag"></i>
                                             <span className="header-cart-count">{cartItems?.length}</span>
                                         </Link>
                                     </div>
+                                    {user && (
+                                        <button className="search-button" onClick={() => setIsSearchShow(true)}>
+                                            <i className="bi bi-box-arrow-right" onClick={() => {
+                                                if (window.confirm('Siz heqiqeten silmek istediyinizden eminsiniz ?')) {
+                                                    localStorage.removeItem("userToken")
+                                                    window.location.href = "/"
+                                                }
+                                            }}></i>
+                                        </button>
+                                    )}
+
                                 </div>
                             </div>
                         </div>
@@ -210,3 +244,7 @@ const Header = ({ setIsSearchShow }) => {
 }
 
 export default Header
+
+
+
+//Odev: Eger giris yapildiysa burayi gosterme, sadece user alani goster yani emailin sifresini falan degistirecek bir alan olsun
