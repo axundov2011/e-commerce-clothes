@@ -5,19 +5,24 @@ import { createCategory } from '../../../redux/slices/category.slice';
 
 const CreateCategoryPage = () => {
     const [loading, setLoading] = useState(false);
+    const [form] = Form.useForm();
     const dispatch  = useDispatch();
     const onFinish = async (values) => {
       setLoading(true);
       try {
-        const response = await dispatch(createCategory());
+        const response = await dispatch(createCategory(values));
 
         if(response.payload){
          message.success("Kategori Başarıyla güncellendi");
+         form.resetFieldse();
         } else {
             message.error("Kategori güncellenirken bir hata oluşdu");
         }
       } catch (error) {
        console.log(error); 
+      } finally{
+        setLoading(false);
+
       }
     }
   return (
@@ -26,6 +31,7 @@ const CreateCategoryPage = () => {
     name="basic" 
     layout="vertical"
     onFinish={onFinish}
+    form={form}
     >
       <Form.Item
         label="Kategori İsmi"

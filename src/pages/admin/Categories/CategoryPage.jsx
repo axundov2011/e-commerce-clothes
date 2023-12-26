@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Button, Popconfirm, Table } from 'antd';
+import { Button, Popconfirm, Table, Space } from 'antd';
 // import { deleteUsers, fetchUsers } from '../../../redux/slices/users.lice';
 import { useDispatch } from 'react-redux';
 import { message } from "antd";
@@ -36,7 +36,7 @@ const CategoryPage = () => {
       const response = await dispatch(deleteCategory(categoryId));
       if (response.payload) {
         message.success("İstifadəçi müvəffəqiyyətlə silindi!")
-          restFetchLogin();
+        restFetchCategory();
       } else {
         message.error("Silmə xətası!")
       }
@@ -51,7 +51,7 @@ const CategoryPage = () => {
   console.log(dataSoruce);
   useEffect(() => {
     restFetchCategory()
-  }, [restFetchCategory])
+  }, [restFetchCategory,])
 
 
 

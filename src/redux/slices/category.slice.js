@@ -30,9 +30,9 @@ export const fetchCategory = createAsyncThunk(
   )
   export const createCategory = createAsyncThunk(
     "auth/fetchCategory",
-    async (categoryId) =>  {
+    async (categoryData) =>  {
         try {
-            const response = await api.post(`/categories/${categoryId}`);
+            const response = await api.post(`/categories`,categoryData);
             const data = response.data
             console.log(data);
             return data;
