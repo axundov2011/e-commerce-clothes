@@ -4,7 +4,7 @@ import { deleteUsers, fetchUsers } from '../../redux/slices/users.lice';
 import { useDispatch } from 'react-redux';
 import { message } from "antd";
 
-const AdminUserPage = () => {
+const UserPage = () => {
 
   const [dataSoruce, setDataSource] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -107,4 +107,4 @@ const AdminUserPage = () => {
   )
 }
 
-export default AdminUserPage
+export default UserPage
