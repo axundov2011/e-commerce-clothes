@@ -7,6 +7,7 @@ const CreateCategoryPage = () => {
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
     const dispatch  = useDispatch();
+    
     const onFinish = async (values) => {
       setLoading(true);
       try {
@@ -14,15 +15,14 @@ const CreateCategoryPage = () => {
 
         if(response.payload){
          message.success("Kategori Başarıyla güncellendi");
-         form.resetFieldse();
+         form.resetFields();
         } else {
             message.error("Kategori güncellenirken bir hata oluşdu");
         }
       } catch (error) {
        console.log(error); 
-      } finally{
-        setLoading(false);
-
+      } finally {
+        setLoading(false)
       }
     }
   return (

@@ -9,7 +9,9 @@ const UserPage = () => {
   const [dataSoruce, setDataSource] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const restFetchLogin = useCallback(async () => {
+
+  
+  const restFetchUser = useCallback(async () => {
     setLoading(true);
     try {
       const response = await dispatch(fetchUsers());
@@ -33,7 +35,7 @@ const UserPage = () => {
       const response = await dispatch(deleteUsers(userEmail));
       if (response.payload) {
         message.success("İstifadəçi müvəffəqiyyətlə silindi!")
-          restFetchLogin();
+        restFetchUser();
       } else {
         message.error("Silmə xətası!")
       }
@@ -47,8 +49,8 @@ const UserPage = () => {
 
   console.log(dataSoruce);
   useEffect(() => {
-    restFetchLogin()
-  }, [restFetchLogin])
+    restFetchUser()
+  }, [restFetchUser])
 
 
 
