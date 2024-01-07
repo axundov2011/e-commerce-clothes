@@ -7,51 +7,7 @@ import { deleteCategory, fetchCategory } from '../../../redux/slices/category.sl
 import { useNavigate } from 'react-router-dom';
 
 
-const columns = [
-    {
-        title: "Kategory Gorseli",
-        dataIndex: "img",
-        key: "img",
-        render: (imgSrc) => (
-            <img
-                src={imgSrc}
-                alt="Image"
-                width={100}
-            />
-        )
-    },
-    {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-        return: () => <b>{text}</b>
-    },
 
-    {
-        title: "Actions",
-        dataIndex: "actions",
-        key: "actions",
-        render: (_, record) => (
-
-            <Space size="large">
-                <Button type='primary' onClick={() => navigate(`/admin/categories/update/${record._id}`)}>
-                    Duzenle
-                </Button>
-                <Popconfirm
-                    title="İstifadəçini sil"
-                    description="İstifadəçini silmək istədiyinizdən əminsiniz mi?"
-                    okText="Yes"
-                    cancelText="No"
-                    onConfirm={() => restFetchDeleteCategory(record._id)}
-                >
-                    <Button danger>Sil</Button>
-                </Popconfirm>
-            </Space>
-
-        )
-    },
-
-];
 const CategoryPage = () => {
 
     const [dataSoruce, setDataSource] = useState([]);
@@ -59,7 +15,51 @@ const CategoryPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
+    const columns = [
+        {
+            title: "Kategory Gorseli",
+            dataIndex: "img",
+            key: "img",
+            render: (imgSrc) => (
+                <img
+                    src={imgSrc}
+                    alt="Image"
+                    width={100}
+                />
+            )
+        },
+        {
+            title: "Name",
+            dataIndex: "name",
+            key: "name",
+            return: () => <b>{text}</b>
+        },
+    
+        {
+            title: "Actions",
+            dataIndex: "actions",
+            key: "actions",
+            render: (_, record) => (
+    
+                <Space size="large">
+                    <Button type='primary' onClick={() => navigate(`/admin/categories/update/${record._id}`)}>
+                        Duzenle
+                    </Button>
+                    <Popconfirm
+                        title="İstifadəçini sil"
+                        description="İstifadəçini silmək istədiyinizdən əminsiniz mi?"
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={() => restFetchDeleteCategory(record._id)}
+                    >
+                        <Button danger>Sil</Button>
+                    </Popconfirm>
+                </Space>
+    
+            )
+        },
+    
+    ];
     const restFetchCategory = useCallback(async () => {
         setLoading(true);
         try {

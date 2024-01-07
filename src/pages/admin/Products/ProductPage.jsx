@@ -31,7 +31,7 @@ const ProductPage = () => {
           title: "Name",
           dataIndex: "name",
           key: "name",
-          render: (text) => <span>{text}</span>,
+          render: (text) => <b>{text}</b>,
         },
         {
           title: "Kategori",
@@ -49,7 +49,7 @@ const ProductPage = () => {
           title: "İndirim",
           dataIndex: "price",
           key: "price",
-          render: (text) => <span>{text && text.discount}</span>,
+          render: (text) => <span>%{text.discount}</span>,
         },
         {
           title: "Actions",
@@ -122,7 +122,8 @@ const ProductPage = () => {
             const response = await dispatch(deleteProducts(productId));
             if (response.payload) {
                 message.success("İstifadəçi müvəffəqiyyətlə silindi!")
-                setDataSource((prev) => prev.filter((product) =>prev._id !== productId));
+                //Bele oldugunda silennen sora UI de guncellemis oluruq
+                setDataSource((prev) => prev.filter((product) =>product._id !== productId));
             } else {
                 message.error("Silmə xətası!")
             }

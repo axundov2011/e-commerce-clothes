@@ -4,32 +4,67 @@ import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
 
 import { useDispatch } from 'react-redux';
-import { createCategory, fetchCategory } from '../../../redux/slices/category.slice';
-import { createProducts, fetchProducts } from '../../../redux/slices/product.slice';
+import { fetchCategory } from '../../../redux/slices/category.slice';
+import { createProducts, fetchProducts, updateFetchProducts } from '../../../redux/slices/product.slice';
+import { useParams } from 'react-router-dom';
 
 
-const CreateProductPage = () => {
+const UpdateProductPage = () => {
     const [loading, setLoading] = useState(false);
-    const [categories, setCategories] = useState([])
+    const [categories, setCategories] = useState([]);
+    const [singleProduct, setSingleProduct] = useState([])
     const [form] = Form.useForm();
     const dispatch  = useDispatch();
-    const FetchCategories = async () => {
-      try {
-          const response = await dispatch(fetchProducts());
-          if (response.payload) {
-              setCategories(response?.payload);
-          } else {
-              message.error("Məlumatlar gəlmədi!")
+    const params = useParams();
+    const productsId = params.id;
+
+    useEffect(() => {
+      const restFetchProduct = async (values) => {
+          setLoading(true);
+          try {
+              //Birden cox promise islemi etmek istediyimiz de Promiseni bu sekilde yaziriq
+              const [categoriesResponse, singleProductDataResponse] = await Promise.all([
+                  dispatch(fetchCategory()),
+                  dispatch(fetchProducts({productsId, values})),
+              ]);
+  
+              if (!categoriesResponse.payload || !singleProductDataResponse.payload) {
+                  message.error("Veri getirme başarısız.");
+              }
+
+              const [categoriesData, singleProductsData] = [categoriesResponse.payload, singleProductDataResponse.payload];
+              console.log(singleProductsData,"singleProductsData");
+  
+              setCategories(categoriesData);
+              console.log(categoriesData, 'categoriesData');
+              setSingleProduct(singleProductsData)
+
+              if (singleProductsData.length > 0) {
+                const productToUpdate = singleProductsData.find(product => product._id === productsId);
+              
+                if (productToUpdate) {
+                  form.setFieldsValue({
+                    name: productToUpdate.name,
+                    // category: productToUpdate.category,
+                    current: productToUpdate.price?.current,
+                    discount: productToUpdate.price?.discount,
+                    description: productToUpdate.description,
+                    img: productToUpdate.img.join("\n"),
+                    colors: productToUpdate.colors.join("\n"),
+                  });
+                } else {
+                  message.error("Ürün bulunamadı.");
+                }
+              }
+          } catch (error) {
+              console.log(error);
+          } finally {
+              setLoading(false);
           }
-
-      } catch (error) {
-          console.log(error);
-      } finally {
-          setLoading(false);
       }
-  };
+      restFetchProduct();
+  }, [dispatch, productsId, form]);
 
-  console.log(categories, 'categories');
 
   const onFinish = async (values) => {
     console.log(values);
@@ -38,35 +73,34 @@ const CreateProductPage = () => {
     const sizes = values.sizes.split('\n').map((link) => link.trim());
     setLoading(true);
     try {
-      const data = await dispatch(createProducts({
+      const data = await dispatch(updateFetchProducts({productsId, values},{
         ...values,
         price: {
-          current: values.current,
-          discount: values.discount,
+          current: values.current !== undefined ? values.current : null,
+          discount: values.discount !== undefined ? values.discount : null,
         },
         colors,
         sizes,
         img: imgLinks,
       }));
+      
 
       if (data.payload) {
-        message.success("Ürün başarıyla oluşturuldu.");
+        message.success("Ürün başarıyla güncellendi.");
         setLoading(false);
         form.resetFields();
       } else {
-        message.error("Ürün oluşturulurken bir hata oluştu.");
+        message.error("Ürün güncellenirken bir hata oluştu.");
       }
     } catch (error) {
-      console.log("Ürün oluşturma hatası:", error);
+      console.log("Ürün güncelleme hatası:", error);
     } finally {
       setLoading(false);
     }
   }
 
-  useEffect(() => {
-    FetchCategories();
-  }, [dispatch])
-  
+
+
   return (
     <Spin spinning={loading}>
       <Form name="basic" layout="vertical" onFinish={onFinish} form={form}>
@@ -93,7 +127,7 @@ const CreateProductPage = () => {
           ]}
         >
           <Select>
-            {categories.map((category) => (
+            {categories && categories.map((category) => (
               <Select.Option value={category._id} key={category._id}>
                 {category.name}
               </Select.Option>
@@ -188,11 +222,11 @@ const CreateProductPage = () => {
         </Form.Item>
 
         <Button type="primary" htmlType="submit">
-          Oluştur
+          update
         </Button>
       </Form>
     </Spin>
   );
 }
 
-export default CreateProductPage
+export default UpdateProductPage
