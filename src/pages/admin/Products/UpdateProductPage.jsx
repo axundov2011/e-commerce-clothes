@@ -6,13 +6,14 @@ import ReactQuill from 'react-quill';
 import { useDispatch } from 'react-redux';
 import { fetchCategory } from '../../../redux/slices/category.slice';
 import { createProducts, fetchProducts, updateFetchProducts } from '../../../redux/slices/product.slice';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const UpdateProductPage = () => {
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([]);
     const [singleProduct, setSingleProduct] = useState([])
+    const navigate = useNavigate();
     const [form] = Form.useForm();
     const dispatch  = useDispatch();
     const params = useParams();
@@ -73,11 +74,12 @@ const UpdateProductPage = () => {
     const sizes = values.sizes.split('\n').map((link) => link.trim());
     setLoading(true);
     try {
-      const data = await dispatch(updateFetchProducts({productsId, values},{
+      const data = await dispatch(updateFetchProducts({productsId},{
         ...values,
         price: {
-          current: values.current !== undefined ? values.current : null,
-          discount: values.discount !== undefined ? values.discount : null,
+          current: values.current,
+          discount: values.discount
+          , 
         },
         colors,
         sizes,
@@ -88,6 +90,7 @@ const UpdateProductPage = () => {
       if (data.payload) {
         message.success("Ürün başarıyla güncellendi.");
         setLoading(false);
+        navigate("navigate/products")
         form.resetFields();
       } else {
         message.error("Ürün güncellenirken bir hata oluştu.");
