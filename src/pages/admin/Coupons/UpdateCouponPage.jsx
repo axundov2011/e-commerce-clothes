@@ -3,7 +3,7 @@ import { Button, Form, Input, InputNumber, message, Spin } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCategory } from '../../../redux/slices/category.slice';
 import { useParams } from 'react-router-dom';
-import { fetchCoupon, updateCoupon } from '../../../redux/slices/coupon.slice';
+import { fetchCoupon,  updateCoupons } from '../../../redux/slices/coupon.slice';
 
 const UpdateCouponPage = () => {
 
@@ -20,15 +20,16 @@ const UpdateCouponPage = () => {
         setLoading(true)
         console.log(values,'values');
        try {
-        const response  = await dispatch(updateCoupon({couponId}));
+        const response  = await dispatch(updateCoupons({couponId,values}));
         console.log(couponId,'couponId');
         if(response.payload){
-            message.success("Category müvəffəqiyyətlə yeniləndi!")
+            message.success("Kupon müvəffəqiyyətlə yeniləndi!")
+            form.resetFields()
         } else {
-            message.error("Category yenilənirkən bir xəta ilə qarşılaşdı!")
+            message.error("Kupon yenilənirkən bir xəta ilə qarşılaşdı!")
         }
        } catch (error) {
-        console.log("Category yeniləmə xətası");
+        console.log("Kupon yeniləmə xətası");
        } finally {
         setLoading(false);
        }
@@ -39,7 +40,7 @@ const UpdateCouponPage = () => {
         const restFethcSignleCoupon = async (values) => {
             setLoading(true);
             try {
-              const response = await dispatch(fetchCoupon({couponId,values}));
+              const response = await dispatch(updateCoupons({couponId,values}));
               if (!response.payload) {
                 throw new Error("Dataları getirme xətası")
               } 

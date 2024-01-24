@@ -4,9 +4,9 @@ import api from "../../components/api/Auth.services"
 
 export const fetchCoupon = createAsyncThunk(
     "coupons/fetchCoupon",
-    async (couponId) => {
+    async (params) => {
         try {
-            const response = await api.get('/coupons',couponId );
+            const response = await api.get('/coupons',params);
             const data = response.data
             console.log(data);
             return data;
@@ -46,11 +46,11 @@ try {
   );
 
 
-export const updateCoupon = createAsyncThunk(
+export const updateCoupons = createAsyncThunk(
     "coupons/fetchCoupon",
-    async (couponId) => {
+    async ({couponId, values}) => {
         try {
-            const response = await api.put(`/coupons/${couponId}`);
+            const response = await api.put(`/coupons/${couponId}`,values);
             const data = response.data
             return data;
         } catch (error) {
