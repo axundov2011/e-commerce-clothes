@@ -8,7 +8,6 @@ export const fetchProducts = createAsyncThunk(
         try {
             const response = await api.get("/products", productsData);
             const data = response.data
-            console.log(data);
             return data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -22,7 +21,6 @@ export const createProducts = createAsyncThunk(
         try {
             const response = await api.post("/products", productsData);
             const data = response.data
-            console.log(data);
             return data;
         } catch (error) {
             return rejectWithValue(error.response.data);

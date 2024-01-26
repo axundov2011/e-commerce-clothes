@@ -10,7 +10,7 @@ const CartTotal = () => {
     //Burada deyirem ki get cartItemsin icerisinde ki datani mapla ve yeni qiymeti total quantitiy vur 
     // sonra yekun neticeni mene return ile don
     const cartItemTotals = cartItems.map((item) => {
-        const itemTotal = item.price.newPrice * item.quantity
+        const itemTotal = item.price * item.quantity
 
         return itemTotal
     });

@@ -23,6 +23,7 @@ const UpdateCaregoryPage = () => {
         console.log(categoryId,'categoryId');
         if(response.payload){
             message.success("Category müvəffəqiyyətlə yeniləndi!")
+            form.setFieldsValue();
         } else {
             message.error("Category yenilənirkən bir xəta ilə qarşılaşdı!")
         }

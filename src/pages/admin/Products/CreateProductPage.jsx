@@ -13,21 +13,7 @@ const CreateProductPage = () => {
     const [categories, setCategories] = useState([])
     const [form] = Form.useForm();
     const dispatch  = useDispatch();
-    const FetchCategories = async () => {
-      try {
-          const response = await dispatch(fetchProducts());
-          if (response.payload) {
-              setCategories(response?.payload);
-          } else {
-              message.error("Məlumatlar gəlmədi!")
-          }
-
-      } catch (error) {
-          console.log(error);
-      } finally {
-          setLoading(false);
-      }
-  };
+  
 
   console.log(categories, 'categories');
 
@@ -38,11 +24,13 @@ const CreateProductPage = () => {
     const sizes = values.sizes.split('\n').map((link) => link.trim());
     setLoading(true);
     try {
+      const current = values.current
+      const discount = values.discount
       const data = await dispatch(createProducts({
         ...values,
         price: {
-          current: values.current,
-          discount: values.discount,
+          current: current,
+          discount: discount,
         },
         colors,
         sizes,
@@ -63,9 +51,24 @@ const CreateProductPage = () => {
     }
   }
 
-  useEffect(() => {
-    FetchCategories();
-  }, [dispatch])
+ useEffect(() => {
+  const FetchProduct = async () => {
+    try {
+        const response = await dispatch(fetchCategory());
+        if (response.payload) {
+            setCategories(response?.payload);
+        } else {
+            message.error("Məlumatlar gəlmədi!")
+        }
+
+    } catch (error) {
+        console.log(error);
+    } finally {
+        setLoading(false);
+    }
+}
+FetchProduct();
+ }, [dispatch])
   
   return (
     <Spin spinning={loading}>

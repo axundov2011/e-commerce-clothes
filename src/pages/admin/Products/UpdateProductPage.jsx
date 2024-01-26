@@ -20,13 +20,13 @@ const UpdateProductPage = () => {
     const productsId = params.id;
 
     useEffect(() => {
-      const restFetchProduct = async (values) => {
+      const restFetchProduct = async () => {
           setLoading(true);
           try {
               //Birden cox promise islemi etmek istediyimiz de Promiseni bu sekilde yaziriq
               const [categoriesResponse, singleProductDataResponse] = await Promise.all([
                   dispatch(fetchCategory()),
-                  dispatch(fetchProducts({productsId, values})),
+                  dispatch(fetchProducts({productsId})),
               ]);
   
               if (!categoriesResponse.payload || !singleProductDataResponse.payload) {
@@ -38,15 +38,15 @@ const UpdateProductPage = () => {
   
               setCategories(categoriesData);
               console.log(categoriesData, 'categoriesData');
-              setSingleProduct(singleProductsData)
+              // setSingleProduct(singleProductsData)
 
-              if (singleProductsData.length > 0) {
+              if (singleProductsData) {
                 const productToUpdate = singleProductsData.find(product => product._id === productsId);
-              
+              console.log(productToUpdate, 'productToUpdate');
                 if (productToUpdate) {
                   form.setFieldsValue({
                     name: productToUpdate.name,
-                    // category: productToUpdate.category,
+                    category: productToUpdate.category,
                     current: productToUpdate.price?.current,
                     discount: productToUpdate.price?.discount,
                     description: productToUpdate.description,
@@ -68,18 +68,19 @@ const UpdateProductPage = () => {
 
 
   const onFinish = async (values) => {
-    console.log(values);
+console.log(values.discount, 'values.discount');  
     const imgLinks = values.img.split('\n').map((link) => link.trim());
     const colors = values.colors.split('\n').map((link) => link.trim());
     const sizes = values.sizes.split('\n').map((link) => link.trim());
     setLoading(true);
     try {
+      const current = values.current;
+      const discount = values.discount;
       const data = await dispatch(updateFetchProducts({productsId},{
         ...values,
         price: {
-          current: values.current,
-          discount: values.discount
-          , 
+          current: current,
+          discount: discount, 
         },
         colors,
         sizes,

@@ -10,21 +10,24 @@ const CartItem = ({cartItem}) => {
   }
   
  
+  const price = cartItem.price && cartItem.price.current;
 
   return (
     <tr className="cart-item">
     <td></td>
 <td className="cart-image">
-<img src={cartItem.img?.singleImage} alt="" />
+<img src={cartItem.img[0]} alt="" />
 <i className="bi bi-x delete-cart" 
 onClick={handleRemoveCart}
 ></i>
 </td>
 <td >{cartItem?.name}</td>
-<td>{cartItem.price.newPrice.toFixed(2)}</td>
+<td>${price ? price.toFixed(2) : "N/A"}</td>
 <td className="product-quantity">{cartItem.quantity}</td>
-<td className="product-subtotal">{(cartItem.price?.newPrice * cartItem.quantity).toFixed(2)}</td>
-</tr>
+<td className="product-subtotal">
+${(price && cartItem.quantity) ? (price * cartItem.quantity).toFixed(2) : "N/A"}
+
+</td></tr>
   )
 }
 
