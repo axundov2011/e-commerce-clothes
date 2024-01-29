@@ -7,11 +7,11 @@ const ProductItem = ({ productItem }) => {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.cart)
 
-  console.log(productItem);
+  console.log(productItem, 'ProductItemData');
   //redux-toolkit
   const handleAddToCart = () => {
     dispatch(addToCart({
-      id: productItem.id,
+      id: productItem._id,
       name: productItem.name,
       img: productItem.img,
       price: productItem.price,
@@ -22,7 +22,9 @@ const ProductItem = ({ productItem }) => {
   console.log(productItem,'productItem');
   //Burda deyirem ki eger cartItem.id beraberdirse productItem.id sine 
   //yani men eyni mehsulun id'si olanlari seciremse mene engel qoy yani disablede bu fonksiyinu kecir 
-  const filteredCart = cartItems.find((cartItem) => cartItem._id === productItem._id);
+  const filteredCart = cartItems.find(
+    (cartItem) => cartItem._id === productItem._id
+    );
   //Bu normal  bir componenti elaqeder edecek funksiyadir
   // const addToCart  = (cartItem) => { 
   //   //setCartItems([...cartItems, product]); Bu birinci yoldur
@@ -32,7 +34,6 @@ const ProductItem = ({ productItem }) => {
  
   //Orginal qiymeti
    const originalPrice = productItem?.price.current;
-
    //Endirimli qiymet
    const discountPercentage = productItem?.price.discount;
 
@@ -81,7 +82,7 @@ const ProductItem = ({ productItem }) => {
           <button>
             <i className="bi bi-heart-fill"></i>
           </button>
-          <Link to={`product/${productItem.id}`} className="product-link" >
+          <Link to={`product/${productItem._id}`} className="product-link" >
             <i className="bi bi-eye-fill"></i>
           </Link>
           <a href="#">

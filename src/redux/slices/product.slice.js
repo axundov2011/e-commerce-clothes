@@ -15,6 +15,19 @@ export const fetchProducts = createAsyncThunk(
     }
 );
 
+
+export const fetchSingleProducts = createAsyncThunk(
+    "products/fetchSingleProducts",
+    async (productId) => {
+        try {
+            const response = await api.get(`/products/${productId}`);
+            const data = response.data
+            return data;
+        } catch (error) {
+          throw error
+        }
+    }
+);
 export const createProducts = createAsyncThunk(
     "products/fetchProducts",
     async (productsData, { rejectWithValue }) => {

@@ -1,9 +1,9 @@
 import Bredcrumb from "./Bredcrumb/Bredcrumb"
-import Galery from "./Galery/Galery"
+import Gallery from "./Galery/Galery"
 import Info from "./Info/Info"
 import "./ProductDetails.css"
 import Tabs from "./Tabs/Tabs"
-const ProductDetails = () => {
+const ProductDetails = ({singleProduct}) => {
     return (
         <div>
             <section className="single-product">
@@ -14,8 +14,8 @@ const ProductDetails = () => {
 
                         <div className="single-content">
                             <main className="site-main">
-                                <Galery />
-                                <Info />
+                                <Gallery  singleProduct={singleProduct}/>
+                                <Info singleProduct={singleProduct} />
                             </main>
                         </div>
                         <Tabs />

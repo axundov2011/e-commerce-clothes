@@ -1,6 +1,5 @@
 import { useState } from "react"
 
-import productData from "../../../Data.json"
 import Slider from "react-slick";
 
 
@@ -34,11 +33,13 @@ const NextBtn = ({ onClick }) => {
         </button>
     )
 }
-const Galery = ({ onClick }) => {
+const Gallery = ({ singleProduct }) => {
     const [activeImg, setActiveImg] = useState({
-        img: productData[0].img.singleImage,
+        img: singleProduct.img[0],
         imageIndex: 0
     });
+
+    console.log(singleProduct, 'singleProduct');
     const SliderSettings = {
         dots: false,
         infinite: true,
@@ -54,24 +55,24 @@ const Galery = ({ onClick }) => {
     return (
         <div className="product-gallery">
             <div className="single-image-wrapper">
-                <img src={`/${activeImg.img}`} id="single-image" alt="" />
+                <img src={`${activeImg.img}`} id="single-image" alt="" />
             </div>
             <div className="product-thumb">
                 <div className="glide__track" data-glide-el="track">
                     <ol className="gallery-thumbs glide__slides">
                         <Slider {...SliderSettings}>
-                            { productData[0].img.thumbs.map((itemImg, index) => 
+                            { singleProduct.img.map((itemImg, index) => 
                             (
                               <li className="glide_slide glide_slide--active"
                                key={index} 
                                onClick={() => setActiveImg({
-                                img: productData[0].img.thumbs[index],
+                                img: singleProduct.img[index],
                                 imageIndex:index
                                }) 
                                 /*Burada ki onclick her sekile tikladigimiz da gedir 
                                 data.jsonda ki sekilleri getirir */}>
                                  <img 
-                                 src={`/${itemImg}`} 
+                                 src={`${itemImg}`} 
                                  className={`img-fluid 
                                  ${ activeImg.imageIndex === index ? 
                                  'active' 
@@ -90,4 +91,4 @@ const Galery = ({ onClick }) => {
     )
 }
 
-export default Galery
+export default Gallery

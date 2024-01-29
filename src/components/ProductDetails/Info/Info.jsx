@@ -1,9 +1,15 @@
 import "./Info.css"
-const Info = () => {
+const Info = ({singleProduct}) => {
+
+    const originalPrice = singleProduct.price.current;
+    const discountPercentage = singleProduct.price.discount;
+
+    const discountedPrice = originalPrice - (originalPrice * discountPercentage)/100
+    console.log(singleProduct, 'singleProductRIGHT');
     return (
         <div className="product-info">
             <h1 className="product-title">
-                Ridley High Waist
+                {singleProduct?.name}
             </h1>
             <div className="product-review">
                 <ul className="product-star">
@@ -16,12 +22,11 @@ const Info = () => {
                 <span>2 reviews</span>
             </div>
             <div className="product-price">
-                <s className="old-price">$165</s>
-                <strong className="new-price">$100</strong>
+                <s className="old-price">${originalPrice.toFixed(2)}</s>
+                <strong className="new-price">${discountedPrice.toFixed(2)}</strong>
             </div>
             <p className="product-description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.
+              {singleProduct?.description}
             </p>
             <form className="variations-form">
                 <div className="variations">
