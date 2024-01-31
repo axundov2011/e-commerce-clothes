@@ -61,9 +61,9 @@ export const deleteProducts = createAsyncThunk(
 
 export const updateFetchProducts = createAsyncThunk(
     "products/fetchProducts",
-    async ({productsId,values}) => {
+    async ({productsId, updatedData}) => {
         try {
-            const response = await api.put(`/products/${productsId}`, values);
+            const response = await api.put(`/products/${productsId}`,updatedData);
             const data = response.data
             console.log(data, 'fetchProducts');
             return data;

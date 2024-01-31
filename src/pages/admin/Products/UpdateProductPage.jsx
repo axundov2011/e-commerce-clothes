@@ -76,7 +76,7 @@ console.log(values.discount, 'values.discount');
     try {
       const current = values.current;
       const discount = values.discount;
-      const data = await dispatch(updateFetchProducts({productsId},{
+      const data = await dispatch(updateFetchProducts({productsId, updatedData: {
         ...values,
         price: {
           current: current,
@@ -85,7 +85,7 @@ console.log(values.discount, 'values.discount');
         colors,
         sizes,
         img: imgLinks,
-      }));
+      }}));
       
 
       if (data.payload) {

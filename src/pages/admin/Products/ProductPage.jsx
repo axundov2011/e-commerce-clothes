@@ -79,13 +79,13 @@ const ProductPage = () => {
         },
       ];
     useEffect(() => {
-        const restFetchProduct = async () => {
+        const restFetchProduct = async (values) => {
             setLoading(true);
             try {
                 //Birden cox promise islemi etmek istediyimiz de Promiseni bu sekilde yaziriq
                 const [categoriesResponse, productsResponse] = await Promise.all([
                     dispatch(fetchCategory()),
-                    dispatch(fetchProducts()),
+                    dispatch(fetchProducts(values)),
                 ]);
     
                 if (!categoriesResponse.payload || !productsResponse.payload) {
