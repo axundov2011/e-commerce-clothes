@@ -22,7 +22,6 @@ const Login = () => {
                 message.error("Daxil olmaq ugursuz oldu!")
             } else if (data.payload && "token" in data.payload) {
                 window.localStorage.setItem("userToken", data.payload.token);
-                console.log('Token saklandı:', data.payload.token);
                 navigate("/");
                 message.success("Sehifeye daxil oldunuz :)")
             } else {
@@ -30,7 +29,7 @@ const Login = () => {
                 message.error("Beklenmeyen cevap formatı");
             }
         } catch (error) {
-            console.log(error);
+            throw error
             setSubmitting(false);
         }
     }

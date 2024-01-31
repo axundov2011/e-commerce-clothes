@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Input, InputNumber, Select, Spin, message } from "antd";
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
@@ -10,94 +10,91 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 const UpdateProductPage = () => {
-    const [loading, setLoading] = useState(false);
-    const [categories, setCategories] = useState([]);
-    const [singleProduct, setSingleProduct] = useState([])
-    const navigate = useNavigate();
-    const [form] = Form.useForm();
-    const dispatch  = useDispatch();
-    const params = useParams();
-    const productsId = params.id;
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const params = useParams();
+  const productsId = params.id;
 
-    useEffect(() => {
-      const restFetchProduct = async () => {
-          setLoading(true);
-          try {
-              //Birden cox promise islemi etmek istediyimiz de Promiseni bu sekilde yaziriq
-              const [categoriesResponse, singleProductDataResponse] = await Promise.all([
-                  dispatch(fetchCategory()),
-                  dispatch(fetchProducts({productsId})),
-              ]);
-  
-              if (!categoriesResponse.payload || !singleProductDataResponse.payload) {
-                  message.error("Veri getirme başarısız.");
-              }
+  useEffect(() => {
+    const restFetchProduct = async () => {
+      setLoading(true);
+      try {
+        //Birden cox promise islemi etmek istediyimiz de Promiseni bu sekilde yaziriq
+        const [categoriesResponse, singleProductDataResponse] = await Promise.all([
+          dispatch(fetchCategory()),
+          dispatch(fetchProducts({ productsId })),
+        ]);
 
-              const [categoriesData, singleProductsData] = [categoriesResponse.payload, singleProductDataResponse.payload];
-              console.log(singleProductsData,"singleProductsData");
-  
-              setCategories(categoriesData);
-              console.log(categoriesData, 'categoriesData');
-              // setSingleProduct(singleProductsData)
+        if (!categoriesResponse.payload || !singleProductDataResponse.payload) {
+          message.error("Veri getirme başarısız.");
+        }
 
-              if (singleProductsData) {
-                const productToUpdate = singleProductsData.find(product => product._id === productsId);
-              console.log(productToUpdate, 'productToUpdate');
-                if (productToUpdate) {
-                  form.setFieldsValue({
-                    name: productToUpdate.name,
-                    category: productToUpdate.category,
-                    current: productToUpdate.price?.current,
-                    discount: productToUpdate.price?.discount,
-                    description: productToUpdate.description,
-                    img: productToUpdate.img.join("\n"),
-                    colors: productToUpdate.colors.join("\n"),
-                  });
-                } else {
-                  message.error("Ürün bulunamadı.");
-                }
-              }
-          } catch (error) {
-              console.log(error);
-          } finally {
-              setLoading(false);
+        const [categoriesData, singleProductsData] = [categoriesResponse.payload, singleProductDataResponse.payload];
+
+        setCategories(categoriesData);
+        // setSingleProduct(singleProductsData)
+
+        if (singleProductsData) {
+          const productToUpdate = singleProductsData.find(product => product._id === productsId);
+          if (productToUpdate) {
+            form.setFieldsValue({
+              name: productToUpdate.name,
+              category: productToUpdate.category,
+              current: productToUpdate.price?.current,
+              discount: productToUpdate.price?.discount,
+              description: productToUpdate.description,
+              img: productToUpdate.img.join("\n"),
+              colors: productToUpdate.colors.join("\n"),
+              size: productToUpdate.size.join("\n"),
+            });
+          } else {
+            message.error("Ürün bulunamadı.");
           }
+        }
+      } catch (error) {
+        throw error
+      } finally {
+        setLoading(false);
       }
-      restFetchProduct();
+    }
+    restFetchProduct();
   }, [dispatch, productsId, form]);
 
 
   const onFinish = async (values) => {
-console.log(values.discount, 'values.discount');  
     const imgLinks = values.img.split('\n').map((link) => link.trim());
     const colors = values.colors.split('\n').map((link) => link.trim());
-    const sizes = values.sizes.split('\n').map((link) => link.trim());
+    const size = values.size.split('\n').map((link) => link.trim());
     setLoading(true);
     try {
       const current = values.current;
       const discount = values.discount;
-      const data = await dispatch(updateFetchProducts({productsId, updatedData: {
-        ...values,
-        price: {
-          current: current,
-          discount: discount, 
-        },
-        colors,
-        sizes,
-        img: imgLinks,
-      }}));
-      
+      const data = await dispatch(updateFetchProducts({
+        productsId, updatedData: {
+          ...values,
+          price: {
+            current: current,
+            discount: discount,
+          },
+          colors ,
+          size ,
+          img: imgLinks,
+        }
+      }));
 
       if (data.payload) {
         message.success("Ürün başarıyla güncellendi.");
         setLoading(false);
-        navigate("navigate/products")
+        navigate("/admin/products")
         form.resetFields();
       } else {
         message.error("Ürün güncellenirken bir hata oluştu.");
       }
     } catch (error) {
-      console.log("Ürün güncelleme hatası:", error);
+      throw "Ürün güncelleme hatası:", error
     } finally {
       setLoading(false);
     }
@@ -211,7 +208,7 @@ console.log(values.discount, 'values.discount');
         </Form.Item>
         <Form.Item
           label="Ürün Bedenleri"
-          name="sizes"
+          name="size"
           rules={[
             {
               required: true,

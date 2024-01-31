@@ -11,7 +11,6 @@ const ProductDetailsPage = () => {
   const dispatch = useDispatch();
   const { id: productId } = useParams();
 
-  console.log(productId, 'productId');
   useEffect(() => {
     const fethcSignlePraduct = async () => {
       setLoading(true);
@@ -26,7 +25,7 @@ const ProductDetailsPage = () => {
         }
 
       } catch (error) {
-        console.log(error);
+          throw error
       } 
     };
     fethcSignlePraduct();

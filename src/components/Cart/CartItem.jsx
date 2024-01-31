@@ -6,7 +6,7 @@ const CartItem = ({cartItem}) => {
   console.log(cartItem,'cartItems');
   
   const handleRemoveCart = () => {
-    dispatch(removeFromCart(cartItem._id))
+    dispatch(removeFromCart(cartItem.id))
   }
   console.log(cartItem,'cartItemssss');
 

@@ -62,7 +62,6 @@ const Login = () => {
                 window.localStorage.setItem("userToken", data.payload.token);
                 window.localStorage.setItem("userRole", userRole);
 
-                console.log('Token stored:', userToken);
                if(userRole === "admin"){
                 navigate("/admin");
                } else {
@@ -71,7 +70,7 @@ const Login = () => {
                 message.success("Sehifeye daxil oldunuz :)")
             }
         } catch (error) {
-            console.log(error);
+            throw error
             setSubmitting(false);
         }
     }

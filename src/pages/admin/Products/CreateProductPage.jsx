@@ -6,6 +6,7 @@ import ReactQuill from 'react-quill';
 import { useDispatch } from 'react-redux';
 import { createCategory, fetchCategory } from '../../../redux/slices/category.slice';
 import { createProducts, fetchProducts } from '../../../redux/slices/product.slice';
+import { useNavigate } from 'react-router-dom';
 
 
 const CreateProductPage = () => {
@@ -13,15 +14,14 @@ const CreateProductPage = () => {
     const [categories, setCategories] = useState([])
     const [form] = Form.useForm();
     const dispatch  = useDispatch();
-  
+    const navigate = useNavigate();
 
-  console.log(categories, 'categories');
+
 
   const onFinish = async (values) => {
-    console.log(values);
     const imgLinks = values.img.split('\n').map((link) => link.trim());
     const colors = values.colors.split('\n').map((link) => link.trim());
-    const sizes = values.sizes.split('\n').map((link) => link.trim());
+    const size = values.size.split('\n').map((link) => link.trim());
     setLoading(true);
     try {
       const current = values.current
@@ -33,7 +33,7 @@ const CreateProductPage = () => {
           discount: discount,
         },
         colors,
-        sizes,
+        size,
         img: imgLinks,
       }));
 
@@ -41,6 +41,7 @@ const CreateProductPage = () => {
         message.success("Ürün başarıyla oluşturuldu.");
         setLoading(false);
         form.resetFields();
+        navigate("/admin/products")
       } else {
         message.error("Ürün oluşturulurken bir hata oluştu.");
       }
@@ -62,7 +63,7 @@ const CreateProductPage = () => {
         }
 
     } catch (error) {
-        console.log(error);
+      throw error
     } finally {
         setLoading(false);
     }
@@ -176,7 +177,7 @@ FetchProduct();
         </Form.Item>
         <Form.Item
           label="Ürün Bedenleri"
-          name="sizes"
+          name="size"
           rules={[
             {
               required: true,

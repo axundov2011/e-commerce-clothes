@@ -23,7 +23,6 @@ const ProductPage = () => {
           key: "img",
           
           render: (imgSrc) => (
-            console.log("imgSrc:", imgSrc),
             <img src={imgSrc[0]} alt="Image" width={100} />
           ),
         },
@@ -93,7 +92,6 @@ const ProductPage = () => {
                 }
     
                 const [categoriesData, productsData] = [categoriesResponse.payload, productsResponse.payload];
-                console.log("productsData:", productsData);
     
                 const productsWithCategories = productsData.map((product) => {
                     const categoryId = product.category;
@@ -109,7 +107,6 @@ const ProductPage = () => {
                 setDataSource(productsWithCategories);
     
             } catch (error) {
-                console.log(error);
             } finally {
                 setLoading(false);
             }
@@ -129,13 +126,11 @@ const ProductPage = () => {
             }
 
         } catch (error) {
-            console.log(error);
         } finally {
             setLoading(false);
         }
     }
 
-    console.log(dataSoruce);
 
 
     return (

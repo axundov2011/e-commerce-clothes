@@ -22,7 +22,7 @@ const UserPage = () => {
       }
 
     } catch (error) {
-      console.log(error);
+      throw error
     } finally {
       setLoading(false);
     }
@@ -41,13 +41,12 @@ const UserPage = () => {
       }
 
     } catch (error) {
-      console.log(error);
+      throw error
     } finally {
       setLoading(false);
     }
   }
 
-  console.log(dataSoruce);
   useEffect(() => {
     restFetchUser()
   }, [restFetchUser])

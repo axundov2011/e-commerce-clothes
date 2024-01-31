@@ -7,6 +7,7 @@ import { fetchProducts } from "../../redux/slices/product.slice";
 import { message } from "antd";
 
 
+
 const Products = () => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false);
@@ -37,7 +38,7 @@ const Products = () => {
       }
   };
   restFetProducts();
-  },[dispatch, ]);
+  },[dispatch ]);
 
   const SliderSettings = {
     dots: false,
@@ -64,30 +65,28 @@ const Products = () => {
       }
     ]
   }
-console.log(products,'products');
+
 
   return (
-    <div>
-      <section className="products">
-        <div className="container">
-          <div className="section-title">
-            <h2>Featured Products</h2>
-            <p>Summer Collection New Morden Design</p>
-          </div>
-          <div className="product-wrapper product-carousel">
-            {/* <ul className="product-list glide__slides" id="product-list"> */}
-            <Slider {...SliderSettings}>
-              {products && products.map((product) => (
-                <ProductItem   productItem={product} key={product._id} />
-              ))}
-            </Slider>
-            {/* </ul> */}
-            <div className="glide__arrows" data-glide-el="controls">
-            </div>
-          </div>
+    <section className="products">
+    <div className="container">
+      <div className="section-title">
+        <h2>Featured Products</h2>
+        <p>Summer Collection New Morden Design</p>
+      </div>
+      <div className="product-wrapper product-carousel">
+        {/* <ul className="product-list glide__slides" id="product-list"> */}
+        <Slider {...SliderSettings}>
+          {products && products.map((product) => (
+            <ProductItem   productItem={product} key={product._id} />
+          ))}
+        </Slider>
+        {/* </ul> */}
+        <div className="glide__arrows" data-glide-el="controls">
         </div>
-      </section>
+      </div>
     </div>
+  </section>
   )
 }
 
