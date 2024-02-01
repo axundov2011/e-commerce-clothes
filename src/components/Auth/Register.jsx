@@ -46,7 +46,6 @@ const Register = () => {
    
     const restFetchRegister = async(values) => {
         const data = await dispatch(fetchRegister(values));
-        console.log(data, 'data');
 
         if(!data.payload){
             return message.error('Qeydiyyat uğursuz oldu!')

@@ -3,12 +3,10 @@ import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../../redux/slices/Cart.slice";
 const CartItem = ({cartItem}) => {
   const dispatch = useDispatch();
-  console.log(cartItem,'cartItems');
   
   const handleRemoveCart = () => {
     dispatch(removeFromCart(cartItem.id))
   }
-  console.log(cartItem,'cartItemssss');
 
   useEffect(() => {
     removeFromCart();

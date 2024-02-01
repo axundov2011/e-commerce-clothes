@@ -17,7 +17,6 @@ const getUserRole = () => {
   // const user = JSON.parse(localStorage.getItem("userToken"));
   // return user ? user.userRole : null
   const userRole = localStorage.getItem("userRole");
-  console.log(userRole, 'userRole');
   return userRole ? userRole : null;
 }
 
@@ -134,7 +133,6 @@ const AdminLayout = ({children}) => {
   ];
   
   if (userRole === "admin"){
-    console.log("User is admin");
     return (
       <div className="admin-layout">
       <Layout style={{
@@ -174,7 +172,6 @@ const AdminLayout = ({children}) => {
       </div>
     )
   } else {
-    console.log("User is not admin");
     return (window.location.href = "/");
   }
 }

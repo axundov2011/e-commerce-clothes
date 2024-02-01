@@ -39,7 +39,6 @@ const Gallery = ({ singleProduct }) => {
         imageIndex: 0
     });
 
-    console.log(singleProduct, 'singleProduct');
     const SliderSettings = {
         dots: false,
         infinite: true,

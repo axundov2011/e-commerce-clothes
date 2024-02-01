@@ -22,6 +22,7 @@ const Login = () => {
                 message.error("Daxil olmaq ugursuz oldu!")
             } else if (data.payload && "token" in data.payload) {
                 window.localStorage.setItem("userToken", data.payload.token);
+                window.localStorage.setItem("id",data.payload.id); 
                 navigate("/");
                 message.success("Sehifeye daxil oldunuz :)")
             } else {

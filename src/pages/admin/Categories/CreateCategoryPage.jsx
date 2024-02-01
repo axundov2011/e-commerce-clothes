@@ -20,7 +20,7 @@ const CreateCategoryPage = () => {
             message.error("Kategori güncellenirken bir hata oluşdu");
         }
       } catch (error) {
-       console.log(error); 
+        throw error 
       } finally {
         setLoading(false)
       }

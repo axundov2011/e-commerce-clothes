@@ -14,14 +14,12 @@ const UpdateCouponPage = () => {
     const dispatch = useDispatch();
     const [initialValues, setInitialValues] = useState({});
 
-    console.log(couponId, 'couponId' );
 
     const onFinish = async(values) => {
         setLoading(true)
-        console.log(values,'values');
+      
        try {
         const response  = await dispatch(updateCoupons({couponId,values}));
-        console.log(couponId,'couponId');
         if(response.payload){
             message.success("Kupon müvəffəqiyyətlə yeniləndi!")
             form.resetFields()
@@ -58,7 +56,7 @@ const UpdateCouponPage = () => {
               }
               
             } catch (error) {
-              console.log(error);
+              throw error
             } finally {
               setLoading(false);
             }

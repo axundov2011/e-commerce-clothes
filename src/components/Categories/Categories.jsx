@@ -67,7 +67,7 @@ const Categories = () => {
                 }
 
             } catch (error) {
-                console.log(error);
+           throw error
             } finally {
                 setLoading(false);
             }

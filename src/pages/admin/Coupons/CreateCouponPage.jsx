@@ -16,10 +16,8 @@ const CreateCouponPage = () => {
     const dispatch  = useDispatch();
     
  
-  console.log(categories, 'categories');
 
   const onFinish = async (values) => {
-    console.log(values);
     setLoading(true);
     try {
       const data = await dispatch(createCoupon(values));

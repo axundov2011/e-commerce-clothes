@@ -7,7 +7,6 @@ const ProductItem = ({ productItem }) => {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.cart)
 
-  console.log(productItem, 'ProductItemData');
   //redux-toolkit
   const handleAddToCart = () => {
     dispatch(addToCart({
@@ -19,7 +18,6 @@ const ProductItem = ({ productItem }) => {
     }));
   };
 
-  console.log(productItem,'productItem');
   //Burda deyirem ki eger cartItem.id beraberdirse productItem.id sine 
   //yani men eyni mehsulun id'si olanlari seciremse mene engel qoy yani disablede bu fonksiyinu kecir 
   const filteredCart = cartItems.find(

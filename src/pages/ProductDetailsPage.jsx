@@ -31,7 +31,7 @@ const ProductDetailsPage = () => {
     fethcSignlePraduct();
   }, [productId, dispatch])
 
-  return singleProduct ? (<ProductDetails singleProduct={singleProduct} />)
+  return singleProduct ? (<ProductDetails singleProduct={singleProduct} setSignleProduct={setSignleProduct} />)
    : ("Ürün yükleniyor")
 }
 

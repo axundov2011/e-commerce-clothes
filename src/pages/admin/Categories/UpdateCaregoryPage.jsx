@@ -13,14 +13,11 @@ const UpdateCaregoryPage = () => {
     const dispatch = useDispatch();
     const [initialValues, setInitialValues] = useState({});
 
-    console.log(categoryId, 'categoryId' );
 
     const onFinish = async(values) => {
         setLoading(true)
-        console.log(values,'values');
        try {
         const response  = await dispatch(updateCategory({categoryId,values}));
-        console.log(categoryId,'categoryId');
         if(response.payload){
             message.success("Category müvəffəqiyyətlə yeniləndi!")
             form.setFieldsValue();
@@ -57,7 +54,7 @@ const UpdateCaregoryPage = () => {
               }
               
             } catch (error) {
-              console.log(error);
+              throw error
             } finally {
               setLoading(false);
             }

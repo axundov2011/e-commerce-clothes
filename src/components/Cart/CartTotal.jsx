@@ -14,7 +14,6 @@ const CartTotal = () => {
 
         return itemTotal
     });
-    console.log(fastCargoCheked, 'fastCargoCheked');
 
 
     //Burada ise deyirem ki get reducer ile toplama isi gor

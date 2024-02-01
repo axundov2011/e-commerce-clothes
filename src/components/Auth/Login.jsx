@@ -29,7 +29,7 @@ const Login = () => {
 
     //       if (authLogin && authLogin) {
     //         const data = await authLogin.payload;
-    //         console.log(data);
+    //        
     //         localStorage.setItem("user", JSON.stringify(data));
     //         message.success("Giriş başarılı.");
     //         navigate("/");

@@ -1,6 +1,12 @@
 
 
-const ReviewItem = () => {
+const ReviewItem = ({singleProduct, revieItem}) => {
+    console.log(revieItem, 'revieItem');
+
+    const {text, createdAt} = revieItem
+
+    //Bir yorumun gonderilme tarixini backendden cekmek
+    const formattedDate = new Date(createdAt).toLocaleDateString("AZE")
   return (
     <div>
         <li className="comment-item">
@@ -26,13 +32,12 @@ const ReviewItem = () => {
                                 </li>
                             </ul>
                             <div className="comment-meta">
-                                <strong>admin</strong>
+                                <strong>{singleProduct?.name}</strong>
                                 <span>-</span>
-                                <time>April 23, 2022</time>
+                                <time>{formattedDate}</time>
                             </div>
                             <div className="comment-description">
-                                <p>Sed perspiciatis unde omnis iste natus error sit voluptatem
-                                    accusantium doloremque laudantium.</p>
+                                <p>{text}</p>
                             </div>
                         </div>
                     </li>

@@ -68,7 +68,7 @@ const CouponPage = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            throw error
         } finally {
             setLoading(false);
         }
@@ -85,13 +85,12 @@ const CouponPage = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            throw error
         } finally {
             setLoading(false);
         }
     }
 
-    console.log(dataSoruce);
     useEffect(() => {
         restFetchCoupon()
     }, [restFetchCoupon,])

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./Info.css"
 import { addToCart } from "../../../redux/slices/Cart.slice";
 import { useRef } from "react";
@@ -13,17 +13,21 @@ const Info = ({ singleProduct }) => {
     const discountedPrice 
     = originalPrice - (originalPrice * discountPercentage) / 100
 
- 
-    const {addToCart} = useDispatch(addToCart);
-    // const handleAddToCart = () => {
-    //     dispatch(addToCart({
-    //         ...singleProduct,
-    //         price:discountedPrice,
-    //         id: singleProduct?._id,
-    //         quantity:parseInt(quantityRef.current.value),
-    //     }))
-    // }
+    const cartItems  = useSelector((state) => state.cart.cart);
+
+    const handleAddToCart = () => {
+        dispatch(addToCart({
+            id: singleProduct._id,
+            name: singleProduct.name,
+            img: singleProduct.img,
+            price: singleProduct.price,
+            quantity:parseInt(quantityRef.current.value),
+        }))
+    }
     console.log(singleProduct);
+
+    const filteredCard = cartItems.find((cartItem) => cartItem._id === singleProduct._id);
+
     return (
         <div className="product-info">
             <h1 className="product-title">
@@ -88,10 +92,12 @@ const Info = ({ singleProduct }) => {
                         type="number" 
                         defaultValue="1" 
                         min="1" id="quantity" />
-                        <button className="btn btn-lg btn-primary" id="add-to-cart" type="button" onClick={() => addToCart({
-                            ...singleProduct,
-                            price: parseInt(quantityRef.current.value)
-                        })}>
+                        <button
+                        disabled={filteredCard} 
+                        className="btn btn-lg btn-primary" 
+                        id="add-to-cart" 
+                        type="button" 
+                        onClick={handleAddToCart}>
                             Add to
                             cart
                             </button>
