@@ -7,6 +7,8 @@ import { message } from "antd";
 const ReviewForm = ({singleProduct, setSignleProduct}) => {
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState("");
+    const [submitting, setSubmitting] = useState(false);
+
     const dispatch = useDispatch();
     const userTokenFromLocalStorage = localStorage.getItem("userToken");
     const user = userTokenFromLocalStorage ? { userToken: userTokenFromLocalStorage } : null;
@@ -17,6 +19,13 @@ const ReviewForm = ({singleProduct, setSignleProduct}) => {
     const handleChangeStars = (e, newRating) => {
       e.preventDefault();
       setRating(newRating);
+
+      if (submitting) {
+        return;
+      }
+
+      setSubmitting(true);
+
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,14 +37,13 @@ const ReviewForm = ({singleProduct, setSignleProduct}) => {
               {
                 text: review,
                 rating: parseInt(rating),
-                user: user.id,
+                user: user.id || user?._id,
               },
             ],
           };
       
         try {
           const data = await api.put(`/products/${singleProduct._id}`,formData); 
-          console.log('Response from server:', data?.data);
           if (data?.data) {
             setSignleProduct(data?.data);
             setRating(0);
@@ -44,10 +52,7 @@ const ReviewForm = ({singleProduct, setSignleProduct}) => {
           }
         } catch (error) {
           message.error("Bir şeyler yanlış gitti");
-        }
-      
-        console.log(formData);
-        console.log(singleProduct,'singleProduct');
+        }      
       };
 
 
@@ -96,7 +101,12 @@ const ReviewForm = ({singleProduct, setSignleProduct}) => {
                             Your review
                             <span className="required">*</span>
                         </label>
-                        <textarea id="comment" cols="50" rows="10" onChange={(e) => setReview(e.target.value)} value={review}></textarea>
+                        <textarea id="comment" cols="50" rows="10" 
+                        onChange={(e) =>
+                        setReview(e.target.value)} 
+                        value={review}>
+                            
+                        </textarea>
                     </div>
                 
                     <div className="comment-form-cookies">

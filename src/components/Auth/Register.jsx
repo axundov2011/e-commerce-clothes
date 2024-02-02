@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
-import { fetchRegister, selecthAuth } from "../../redux/slices/Auth.slice";
+import { fetchRegister, fetchUsers, selecthAuth } from "../../redux/slices/Auth.slice";
 import { useForm } from 'react-hook-form';
 const Register = () => {
     // const [formData, setFormData] = useState({
@@ -43,22 +43,48 @@ const Register = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {register, handleSubmit, formState:{errors}} = useForm()
+
+    
    
-    const restFetchRegister = async(values) => {
-        const data = await dispatch(fetchRegister(values));
-
-        if(!data.payload){
-            return message.error('Qeydiyyat uğursuz oldu!')
+    const restFetchRegister = async (values) => {
+        try {
+          const data = await dispatch(fetchRegister(values));
+      
+          if (!data.payload) {
+            return message.error('Qeydiyyat uğursuz oldu!');
+          }
+      
+          if ('token' in data.payload) {
+            const userToken = data.payload.token;
+            window.localStorage.setItem('userToken', userToken);
+           
+            const userRole = data.payload.role || "user";
+            window.localStorage.setItem("userRole", userRole)
+             
+            if(userRole === "admin"){
+                navigate("/admin");
+            } else {
+                navigate("/");
+            }
+                
+            message.success('Qeydiyyat uğurlu oldu');
+          } else {
+            message.error('Bu qeydiyyatdan keçib');
+          }
+      
+          // Fetch user data after successful registration
+          const userData = await dispatch(fetchUsers(values));
+      
+          if ('user' in userData.payload) {
+            const user = userData.payload.user;
+            console.log('User:', user);
+            window.localStorage.setItem('user', JSON.stringify(user));
+          }
+        } catch (error) {
+          console.error('Error during registration:', error);
+          message.error('Qeydiyyat sırasında bir hata oluştu');
         }
-
-        if('token' in data.payload) {
-            window.localStorage.setItem('userToken', data.payload.token);
-            message.success("Qeydiyyat uğurlu oldu")
-            navigate("/");
-        } else {
-            message.error("Bu qeydiyyatdan keçib")
-        }
-    };
+      };
 
     const registerOptions = {
         username: {required: 'username is required'},

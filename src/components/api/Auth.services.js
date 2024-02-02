@@ -8,6 +8,7 @@ const instance = axios.create({
 // Ve biz her login olmus userle daxil oldugumuzda headerse baxdigimizda ayrica Authorizationin icinde bize token qaytardigini goreceyik
 instance.interceptors.request.use((config) => {
     config.headers.Authorization = window.localStorage.getItem('token');
+    config.headers.Authorization = window.localStorage.getItem("user");
 
     return config;
 })

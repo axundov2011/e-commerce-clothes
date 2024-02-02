@@ -24,7 +24,6 @@ const Info = ({ singleProduct }) => {
             quantity:parseInt(quantityRef.current.value),
         }))
     }
-    console.log(singleProduct);
 
     const filteredCard = cartItems.find((cartItem) => cartItem._id === singleProduct._id);
 

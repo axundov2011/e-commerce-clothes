@@ -4,6 +4,7 @@ import "./Auth.css"
 import UpdateAccount from "./UpdateAccount"
 const Auth = () => {
     const userToken = localStorage.getItem("userToken");
+    
     return (
         <div>
             <section className="account-page">

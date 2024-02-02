@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
-import { fetchLogin} from "../../redux/slices/Auth.slice";
+import { fetchLogin, fetchUsers} from "../../redux/slices/Auth.slice";
 import { useForm } from 'react-hook-form';
 
 const Login = () => {
@@ -48,32 +48,47 @@ const Login = () => {
   
     const restUsers = async (values) => {
         try {
-            setSubmitting(true);
-            const data = await dispatch(fetchLogin(values));
-
-            if (!data.payload) {
-                message.error("Daxil olmaq ugursuz oldu!")
+          setSubmitting(true);
+      
+          // Dispatch login action
+          const loginData = await dispatch(fetchLogin(values));
+      
+          if (!loginData.payload) {
+            message.error("Daxil olmaq ugursuz oldu!");
+          }
+      
+          // Check if token is present in the response
+          if ("token" in loginData.payload) {
+            const userToken = loginData.payload.token;
+            const userRole = loginData.payload.role;
+      
+            window.localStorage.setItem("userToken", userToken);
+            window.localStorage.setItem("userRole", userRole);
+      
+            // Redirect based on user role
+            if (userRole === "admin") {
+              navigate("/admin");
+            } else {
+              navigate("/");
             }
-
-            if ("token" in data.payload) {
-                const userToken = data.payload.token;
-                const userRole = data.payload.role;
-                
-                window.localStorage.setItem("userToken", data.payload.token);
-                window.localStorage.setItem("userRole", userRole);
-
-               if(userRole === "admin"){
-                navigate("/admin");
-               } else {
-                navigate("/");
-               }
-                message.success("Sehifeye daxil oldunuz :)")
-            }
+            message.success("Sehifeye daxil oldunuz :)");
+          }
+      
+          // Fetch user data after successful login
+          const userData = await dispatch(fetchUsers(values));
+      
+          if ('user' in userData.payload) {
+            const user = userData.payload.user;
+            console.log('User:', user);
+            window.localStorage.setItem('user', JSON.stringify(user));
+          }
         } catch (error) {
-            throw error
-            setSubmitting(false);
+          console.error("Error during login:", error);
+          message.error("Daxil olmaq sırasında bir hata oluştu");
+        } finally {
+          setSubmitting(false);
         }
-    }
+      };
   
     const loginOptions = {
         name: { required: "Name is required" },

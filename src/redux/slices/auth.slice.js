@@ -5,7 +5,7 @@ import CartSlice from "./Cart.slice";
 export const fetchRegister = createAsyncThunk(
     "auth/fetchRegister",
     async (params) => {
-        const { data } = await api.post("auth/register", params);
+        const { data } = await api.post("/auth/register", params);
         console.log(data, "fetchRegisterData");
         return data;
     });
@@ -14,7 +14,7 @@ export const fetchRegister = createAsyncThunk(
         "auth/upDateRegister",
         async (params) => {
           try {
-            const { data } = await api.post("auth/update", params);
+            const { data } = await api.post("/auth/update", params);
             console.log(data, 'upDateRegisterData');
             return { payload: data }; // Ensure you return an object with a 'payload' key
           } catch (error) {
@@ -27,7 +27,7 @@ export const fetchLogin = createAsyncThunk(
     "auth/fetchLogin",
 async (params) => {
         try {
-            const response  = await api.post("auth/login", params);
+            const response  = await api.post("/auth/login", params);
             const data = response.data // Yalnızca gerekli verileri çıkarın
             console.log(data, 'fetchLoginData');
             return data;
@@ -40,9 +40,9 @@ async (params) => {
     "auth/fetchUsers",
     async (params) => {
         try {
-            const response = await api.get("auth/users", params);
+            const response = await api.get("/users", params);
             const data = response.data
-            console.log(data);
+            console.log(data, 'fetchUsers');
             return data;
         } catch (error) {
             throw error;
