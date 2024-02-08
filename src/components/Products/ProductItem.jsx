@@ -38,6 +38,7 @@ const ProductItem = ({ productItem }) => {
    //Endirim qiymeti hesablama
    const discountedPrice =  originalPrice - (originalPrice * discountPercentage) / 100;
 
+   
   return (
 
     <div className="product-item glide__slide glide__slide--active" >
@@ -49,7 +50,7 @@ const ProductItem = ({ productItem }) => {
         </a>
       </div>
       <div className="product-info">
-        <a href="$" className="product-title">Analogue Resin Strap</a>
+        <a href="$" className="product-title">{productItem.name}</a>
         <ul className="product-star">
           <li>
             <i className="bi bi-star-fill"></i>
