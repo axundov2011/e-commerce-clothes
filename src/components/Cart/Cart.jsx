@@ -17,7 +17,7 @@ const Cart = () => {
                         <CartProgres />
                         <div className="shop-table-wrapper">
                             <CartTable />
-                            <CartCupon />
+                            <CartCupon cartItems={cartItems}/>
                         </div>
                     </form>
                     <div className="cart-collaterals">

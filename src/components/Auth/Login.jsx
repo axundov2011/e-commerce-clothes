@@ -69,7 +69,7 @@ const Login = () => {
             if (userRole === "admin") {
               navigate("/admin");
             } else {
-              navigate("/");
+              navigate("/admin");
             }
             message.success("Sehifeye daxil oldunuz :)");
           }
@@ -84,7 +84,6 @@ const Login = () => {
           }
         } catch (error) {
           console.error("Error during login:", error);
-          message.error("Daxil olmaq sırasında bir hata oluştu");
         } finally {
           setSubmitting(false);
         }

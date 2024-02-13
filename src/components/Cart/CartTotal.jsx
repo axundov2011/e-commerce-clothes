@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useSelector } from "react-redux"
-
+import {loadStripe} from "@stripe/stripe-js"
+import api from "../../components/api/Auth.services"
+import { message } from "antd";
 const CartTotal = () => {
+    const stripePublicKey = import.meta.env.VITE_API_STRIPE_PUBLIC_KEY;
     const cartItems  = useSelector((state) => state.cart.cart);
 
     //state yaradaraq deyerimizi check edirik
@@ -14,6 +17,10 @@ const CartTotal = () => {
 
         return itemTotal
     });
+
+
+    const user  = localStorage.getItem("userToken") ? localStorage.getItem("userToken")
+    : null
 
 
     //Burada ise deyirem ki get reducer ile toplama isi gor
@@ -29,10 +36,46 @@ const CartTotal = () => {
     // Kargo qiymetini gelirsen. Gelende true olur tezden eger umumi qiymetden cixmaq istedikde false olur
     // Ve gozel terefi odur ki secdiyimiz her hanisa urunu sildiyimizde qiymetde avtomatik silinir
        const cargoFee = 15;
-       const cartTotals = fastCargoCheked ? (subTotal + cargoFee).toFixed(2) : subTotal.toFixed(2);
+       const cartTotals = fastCargoCheked 
+       ? (subTotal + cargoFee).toFixed(2) 
+       : subTotal.toFixed(2);
 
 
+   // Stripe ile Odeme islemi
+   const handlePayment = async() => {
+    if(!user){
+        return message.info("Ödəmə əməliyyatı etmək üçün giriş etməlisiniz!")
+    }
+     const body = {
+        products: cartItems,
+        user: user,
+        cargoFee: fastCargoCheked ? cargoFee : 0
+     };
+     console.log(body);
 
+     try {
+        const stripe = await loadStripe(stripePublicKey);
+
+        const response = await api.post(`/payment`,body);
+        console.log(response.data);
+
+        if(!response.data){
+            message.error("Ödeme işlemi başarısız oldu.")
+            return;
+        }
+
+        const sessionData = await response.data;
+        const result = await stripe.redirectToCheckout({
+            sessionId:sessionData.id,
+        });
+        if(result.error){
+            throw new Error(result.error.message) //stripe paketinin oz errorun qaytara bilir
+
+        }
+     } catch (error) {
+        console.log(error);
+     }
+   }
 
   return (
     <div className="cart-totals">
@@ -73,7 +116,7 @@ const CartTotal = () => {
         </tbody>
     </table>
     <div className="checkout">
-        <button className="btn btn-lg">Proceed to checkout</button>
+        <button className="btn btn-lg" onClick={handlePayment}>Proceed to checkout</button>
     </div>
 </div>
   )

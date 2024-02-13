@@ -19,6 +19,8 @@ import UpdateProductPage from "./pages/admin/Products/UpdateProductPage"
 import CouponPage from "./pages/admin/Coupons/CouponPage"
 import CreateCouponPage from "./pages/admin/Coupons/CreateCouponPage"
 import UpdateCouponPage from "./pages/admin/Coupons/UpdateCouponPage"
+import Success from "./pages/Success"
+import OrderPage from "./pages/admin/OrderPage"
 
 
 function App() {
@@ -26,38 +28,41 @@ function App() {
   return (
     <React.Fragment>
       <Routes>
-        <Route path="/" element={<HomePage/>} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/auth" element={<AuthenticationPage />} />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
-        <Route path="/blog/:id" element={<BlogDetailsPage />}/>
-        
+        <Route path="/blog/:id" element={<BlogDetailsPage />} />
+        <Route path="/success" element={<Success/>} />
+
         <Route path="/admin/*">
-        <Route path="users" element={<UserPage/>}/>
+          <Route path="users" element={<UserPage />} />
+          <Route path="orders" element={<OrderPage/>} />
 
-        <Route path="categories" element={<CategoryPage/>}/>
-        <Route path="categories/create" element={<CreateCategoryPage/>}/>
-        <Route path="categories/update/:id" element={<UpdateCaregoryPage/>}/>
+          <Route path="categories" element={<CategoryPage />} />
+          <Route path="categories/create" element={<CreateCategoryPage />} />
+          <Route path="categories/update/:id" element={<UpdateCaregoryPage />} />
 
-        <Route path="products" element={<ProductPage/>}/>
-        <Route path="products/create"  element={<CreateProductPage/>}  />
-        <Route path="products/update/:id" element={<UpdateProductPage/>}/>
+          <Route path="products" element={<ProductPage />} />
+          <Route path="products/create" element={<CreateProductPage />} />
+          <Route path="products/update/:id" element={<UpdateProductPage />} />
 
-        <Route path="coupons" element={<CouponPage/>}/>
-        <Route path="coupons/create"  element={<CreateCouponPage/>}  />
-        <Route path="coupons/update/:id" element={<UpdateCouponPage/>}/>
+          <Route path="coupons" element={<CouponPage />} />
+          <Route path="coupons/create" element={<CreateCouponPage />} />
+          <Route path="coupons/update/:id" element={<UpdateCouponPage />} />
+         
+          
 
 
-        
         </Route>
-        
-    
+
+
       </Routes>
 
-</React.Fragment>
+    </React.Fragment>
   )
 }
 

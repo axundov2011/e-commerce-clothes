@@ -24,7 +24,7 @@ onClick={handleRemoveCart}
 ></i>
 </td>
 <td >{cartItem?.name}</td>
-<td>${price ? price.toFixed(2) : "N/A"}</td>
+<td>${price && price.toFixed(2)}</td>
 <td className="product-quantity">{cartItem.quantity}</td>
 <td className="product-subtotal">{(price * cartItem.quantity).toFixed(2)}</td>
 </tr>

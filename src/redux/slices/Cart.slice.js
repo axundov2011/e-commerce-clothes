@@ -24,11 +24,14 @@ const cartSlice = createSlice({
         },
         removeFromCart: (state, action) => {
             state.cart = state.cart.filter(item => item.id !== action.payload);
+        },
+        setCartItems:(state, action) => {
+          state.cart = action.payload; //Yerel depolamadan yüklenen öğeleri ata
         }
     },
     //Bu değişiklikle, addToCart fonksiyonuna gönderilen aksiyon nesnesi { id, quantity } şeklinde olmalıdır. Eğer ürün zaten sepette varsa, sadece miktarı artırır; aksi takdirde, yeni bir öğe olarak ekler.
 //Bu örnekte, action.payload içinde id ve quantity özellikleri bekleniyor. Eğer bu aksiyonu gönderiyorsanız, bu güncellenmiş fonksiyonu kullanabilirsiniz.
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart,setCartItems } = cartSlice.actions;
 export default cartSlice.reducer;
