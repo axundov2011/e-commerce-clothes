@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { message } from "antd";
+import { Spin, message } from "antd";
 import { fetchLogin, fetchUsers} from "../../redux/slices/Auth.slice";
 import { useForm } from 'react-hook-form';
 
@@ -41,12 +41,14 @@ const Login = () => {
     //     }
     //   };
     const [isSubmitting, setSubmitting] = useState(false);
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm();
   
     const restUsers = async (values) => {
+        setLoading(true)
         try {
           setSubmitting(true);
       
@@ -86,6 +88,7 @@ const Login = () => {
           console.error("Error during login:", error);
         } finally {
           setSubmitting(false);
+          setLoading(false);
         }
       };
   
@@ -105,13 +108,15 @@ const Login = () => {
     return (
         <div className="account-column">
             <h2>Login</h2>
-            <form onSubmit={handleSubmit(restUsers)}>
+           <Spin spinning={loading}>
+           <form onSubmit={handleSubmit(restUsers)}>
                 <div>
                     <label>
                         <span>Username or email address <span className="required">*</span></span>
                         <input
                             type="text"
                             name="email"
+                            required
                             {...register('email', loginOptions.email)}
                         />
                         <small className='text-danger'>
@@ -125,6 +130,7 @@ const Login = () => {
                         <input
                             type="password"
                             name="password"
+                            required
                             {...register('password', loginOptions.password)}
                         />
                         <small className="text-danger">
@@ -143,6 +149,7 @@ const Login = () => {
                 </p>
                 <a href="#" className="form-link">Lost your password?</a>
             </form>
+           </Spin>
         </div>
     )
 }

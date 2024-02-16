@@ -123,6 +123,7 @@ const Register = () => {
                 <input 
                 type="email" 
                 name="email" 
+                required
                 {...register('email', registerOptions?.email)}                
                 />
                 <small className="text-danger">
@@ -136,6 +137,7 @@ const Register = () => {
                 <input 
                 type="password" 
                 name="password" 
+                required
                 {...register('password', registerOptions?.password)}
                 />
                 <small className="text-denger">

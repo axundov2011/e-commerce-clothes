@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import Slider from "react-slick";
 
@@ -35,9 +35,18 @@ const NextBtn = ({ onClick }) => {
 }
 const Gallery = ({ singleProduct }) => {
     const [activeImg, setActiveImg] = useState({
-        img: singleProduct.img[0],
+        img: "",
         imageIndex: 0
     });
+
+//useEffectnen bunu ona gore edirem ki search ederken 
+//her hansisa product cixanda onun uzerine tikladigimda arxa fonda o urun detayi gelsin
+    useEffect(() => {
+    setActiveImg({
+        img: singleProduct.img[0],
+        imageIndex: 0
+    })
+    }, [singleProduct.img])
 
     const SliderSettings = {
         dots: false,

@@ -29,7 +29,9 @@ const ReviewForm = ({singleProduct, setSignleProduct}) => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
+      if(rating === 0){
+        return message.warning("Puan seçin!")
+      }
         const formData = {
             
             reviews: [
@@ -37,7 +39,7 @@ const ReviewForm = ({singleProduct, setSignleProduct}) => {
               {
                 text: review,
                 rating: parseInt(rating),
-                user: user.id || user?._id,
+                user: user.id || user._id,
               },
             ],
           };
@@ -104,7 +106,9 @@ const ReviewForm = ({singleProduct, setSignleProduct}) => {
                         <textarea id="comment" cols="50" rows="10" 
                         onChange={(e) =>
                         setReview(e.target.value)} 
-                        value={review}>
+                        value={review}
+                        required
+                        >
                             
                         </textarea>
                     </div>

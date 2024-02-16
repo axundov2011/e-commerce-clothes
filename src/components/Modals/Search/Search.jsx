@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import "./Search.css"
 import api from "../../../components/api/Auth.services"
 import { message } from 'antd'
+import {Link} from "react-router-dom"
 const Search = ({ isSearchShow, setIsSearchShow }) => {
   const [searchResults, setSearchResults] = useState(null);
 
@@ -73,14 +74,14 @@ const Search = ({ isSearchShow, setIsSearchShow }) => {
               )
             }
             {searchResults?.length > 0 && searchResults?.map((resultItem) => (
-              <a href="#" className="result-item" key={resultItem._id}>
+              <Link to={`product/${resultItem._id}`} className="result-item" key={resultItem._id}>
                 <img src={resultItem?.img[0]} className="search-thumb" alt="" />
                 <div className="search-info">
                   <h4>{resultItem.name}</h4>
                   <span className="search-sku">SKU: PD0016</span>
                   <span className="search-price">${resultItem.price.current.toFixed(2)}</span>
                 </div>
-              </a>
+              </Link>
             ))
             }
 

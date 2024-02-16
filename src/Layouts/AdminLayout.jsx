@@ -20,15 +20,23 @@ const getUserRole = () => {
   return userRole ? userRole : null;
 }
 
+
+
 const AdminLayout = ({children}) => {
   const navigate = useNavigate();
   const userRole = getUserRole();
+
+
+
+
+
   //Bir nestedMenudur
   const menuItems = [
     {
       key: "1",
       icon: <DashboardOutlined />,
       label: "Dashboard",
+      path:"/admin",
       onClick: () => {
         navigate(`/admin`);
       },
@@ -118,6 +126,7 @@ const AdminLayout = ({children}) => {
       key: "12",
       icon: <ShoppingCartOutlined />,
       label: "Siparişler",
+      path:"/admin/orders",
       onClick: () => {
         navigate(`/admin/orders`);
       },
@@ -131,6 +140,45 @@ const AdminLayout = ({children}) => {
       },
     },
   ];
+
+
+  const getActiveKey = () => {
+    //Navda activ rengi saxlamaq ucun yazilan fonksiyondur
+    //forla dongu icerisinde donecem. Deyecem ki oncelikle her bir datani(objecti) gez,
+    //Eger objectin childreni var ise onun da icerisinde gez, 
+    //eger misal 'menuItems' icerisinde ki pathle "http://localhost:5173/admin/products" icerisinde ki path eynidirse,
+    //bunun key nomresin gonder
+    for(const item of menuItems){
+      if(item.children){
+        for(const child of item.children){
+          if(child.path === window.location.pathname){
+            return child.key;
+          }
+        } 
+      }else {
+        if(item.path === window.location.pathname){
+          return item.key
+        }
+      }
+    }
+  };
+
+
+  const getPageTitle = () => {
+    for(const titleItem of menuItems){
+       if(titleItem.chil){
+        for( const child of titleItem.children){
+          if(child.path === window.location.pathname){
+            return child.key;
+          }
+        }
+       } else {
+        if(titleItem.path === window.location.pathname){
+          return titleItem.label;
+        }
+       }
+      }
+  }
   
   if (userRole === "admin"){
     return (
@@ -140,10 +188,11 @@ const AdminLayout = ({children}) => {
       }}>
         <Sider  theme="dark">
           <Menu mode="vertical "
-          items={menuItems}
           style={{
             height:"100%"
           }}
+          items={menuItems}
+          defaultSelectedKeys={[getActiveKey()]}
           />
         </Sider>
         <Layout>
@@ -153,6 +202,7 @@ const AdminLayout = ({children}) => {
           justifyContent:"space-between",
           color:"wheat"
          }}>
+          <h2>{getPageTitle()}</h2>
           <h2>Admin Paneli</h2>
          </div>
           </Header>

@@ -8,10 +8,12 @@ import store from './redux/store.js';
 import {BrowserRouter} from "react-router-dom"
 import App from './App.jsx';
 import Layout from './Layouts/Layout.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
  <BrowserRouter>
+ <ScrollToTop/>
   <Provider store={store}>
       <Layout>
     <App />
