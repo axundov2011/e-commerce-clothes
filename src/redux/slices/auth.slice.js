@@ -107,6 +107,8 @@ const authSlice = createSlice({
     }
 })
 export const selecthAuth = (state) => Boolean(state.auth && state.auth.data);
-// export default authSlice;
+// export const { login } = authSlice.action
 export const {logout, login}  = authSlice.actions
-export const authReducer = authSlice.reducer;
+export default authSlice.reducer;
+
+// export const authReducer = authSlice.reducer;
