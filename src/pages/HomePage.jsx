@@ -7,7 +7,7 @@ import Blogs from "../components/Blogs/Blogs";
 import Brands from "../components/Brands/Brands";
 import CampaignSingle from "../components/CampainSigle/CampainSigle";
 import { useDispatch } from "react-redux";
-import { setCartItems } from "../redux/slices/Cart.slice";
+import { setCartItems } from "../redux/slices/cart.slice";
 
 const HomePage = () => {
   const dispatch = useDispatch();

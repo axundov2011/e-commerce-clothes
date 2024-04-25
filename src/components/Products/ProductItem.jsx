@@ -1,6 +1,6 @@
 import "./ProductItem.css"
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../redux/slices/Cart.slice";
+import { addToCart } from "../../redux/slices/cart.slice";
 import { Link, useNavigate } from "react-router-dom";
 const ProductItem = ({ productItem }) => {
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import { useState } from "react"
 import api from "../../components/api/Auth.services"
 import { message } from "antd"
 import { useDispatch, useSelector } from "react-redux"
-import { setCartItems } from "../../redux/slices/Cart.slice"
+import { setCartItems } from "../../redux/slices/cart.slice"
 const CartCupon = ({cartItems}) => {
   const [couponCode, setCouponCode] = useState("")
   const dispatch = useDispatch();

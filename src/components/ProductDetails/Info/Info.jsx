@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./Info.css"
-import { addToCart } from "../../../redux/slices/Cart.slice";
+import { addToCart } from "../../../redux/slices/cart.slice";
 import { useRef } from "react";
 const Info = ({ singleProduct }) => {
      

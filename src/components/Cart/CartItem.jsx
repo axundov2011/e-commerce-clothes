@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../../redux/slices/Cart.slice";
+import { addToCart, removeFromCart } from "../../redux/slices/cart.slice";
 const CartItem = ({cartItem}) => {
   const dispatch = useDispatch();
   

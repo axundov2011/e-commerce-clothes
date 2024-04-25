@@ -2,7 +2,7 @@ import { Button, Result } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { setCartItems } from '../redux/slices/Cart.slice'
+import { setCartItems } from '../redux/slices/cart.slice'
 
 const Success = () => {
     // const cartItems = useSelector((state) => state.cart.cart);
