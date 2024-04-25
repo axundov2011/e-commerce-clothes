@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
-import { fetchRegister, fetchUsers, selecthAuth } from "../../redux/slices/Auth.slice";
+import { fetchRegister, fetchUsers, selecthAuth } from "../../redux/slices/auth.slice";
 import { useForm } from 'react-hook-form';
 const Register = () => {
     // const [formData, setFormData] = useState({

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Spin, message } from "antd";
-import { fetchLogin, fetchUsers} from "../../redux/slices/Auth.slice";
+import { fetchLogin, fetchUsers} from "../../redux/slices/auth.slice";
 import { useForm } from 'react-hook-form';
 
 const Login = () => {

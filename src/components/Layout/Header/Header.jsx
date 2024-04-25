@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Header.css"
-import { logout, selecthAuth } from "../../../redux/slices/Auth.slice";
+import { logout, selecthAuth } from "../../../redux/slices/auth.slice";
 const Header = ({ setIsSearchShow }) => {
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const { pathname } = useLocation();

@@ -4,7 +4,7 @@ import ReviewItem from "./ReviewItem"
 import "./Reviews.css"
 import { message } from "antd"
 import { useDispatch } from "react-redux"
-import { fetchUsers } from "../../redux/slices/Auth.slice"
+import { fetchUsers } from "../../redux/slices/auth.slice"
 const Reviews = ({ active, singleProduct, setSignleProduct }) => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false)
