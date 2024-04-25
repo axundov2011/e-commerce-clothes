@@ -1,16 +1,13 @@
-import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit"
-import cartSlice from "./slices/cart.slice";
-import authSlice from "./slices/auth.slice";
-import categorySlice from "./slices/category.slice";
+import { configureStore } from "@reduxjs/toolkit";
+import cartReducer from "./slices/cart.slice"; 
+import authReducer from "./slices/auth.slice";
+import categoryReducer from "./slices/category.slice";
 
-
-
-const store  = configureStore({
+const store = configureStore({
     reducer: {
-        cart: cartSlice,
-        auth: authSlice,
-        category: categorySlice,
-
+        cart: cartReducer,
+        auth: authReducer,
+        category: categoryReducer,
     },
 });
 
