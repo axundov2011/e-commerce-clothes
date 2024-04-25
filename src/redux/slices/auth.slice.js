@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import api from "../../components/api/Auth.services"
-import CartSlice from "./Cart.slice";
 // import { param } from "../../../../backend/routes";
 export const fetchRegister = createAsyncThunk(
     "auth/fetchRegister",

@@ -1,6 +1,6 @@
 import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit"
 import CartSlice from "./slices/Cart.slice";
-import authSlice from "./slices/Auth.slice";
+import authSlice from "./slices/auth.slice";
 import categorySlice from "./slices/category.slice";
 
 
