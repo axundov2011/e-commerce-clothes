@@ -31,3 +31,5 @@
 
   export const { addToCart, removeFromCart, setCartItems } = cartSlice.actions;
   export default cartSlice.reducer;
+  
+  
